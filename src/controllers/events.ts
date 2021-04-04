@@ -17,7 +17,6 @@ const TOKEN_PATH = 'token.json';
 // Load client secrets from a local file.
 fs.readFile(path.join(__dirname, '../credentials.json'), (err: any, content: any) => {
   if (err) return console.log('Error loading client secret file:', err);
-  // console.log(JSON.stringify(JSON.parse(content)));
   // Authorize a client with credentials, then call the Google Calendar API.
   authorize(JSON.parse(content), listEvents);
 });
@@ -37,6 +36,8 @@ function authorize(credentials: any, callback: any) {
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err: any, token: any) => {
     if (err) return getAccessToken(oAuth2Client, callback);
+
+    console.log(JSON.stringify(token))
     oAuth2Client.setCredentials(JSON.parse(token));
     callback(oAuth2Client);
   });
